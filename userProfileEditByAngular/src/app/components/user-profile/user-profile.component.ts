@@ -2,17 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../models/user.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent implements OnInit{
 
   user: User = new User()
+
+  isLoader: boolean = true
 
   ngOnInit(): void {
     this.fetchUserData()
@@ -29,8 +32,7 @@ export class UserProfileComponent implements OnInit{
   constructor(private router: Router) {}
 
   navigateToEdit(data: User) {
-    this.router.navigate(['/editProfile']);
-    this.user = data
+    this.router.navigate(['/editProfile'], { state: { user: data }});
   }
 
 }
